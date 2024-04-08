@@ -1,0 +1,21 @@
+.sectionFeaturedItems {
+  background-color: #d3e3f3;
+}
+
+.title {
+  text-align: center;
+  text-transform: uppercase;
+  color: var(--color-white);
+  font-size: 2.5rem;
+  letter-spacing: 1rem;
+  background: var(--gradient-violet);
+  padding: 2rem;
+}
+
+.list {
+  display: flex;
+  list-style-type: none;
+  column-gap: 2rem;
+  padding: 2rem;
+  justify-content: center;
+}

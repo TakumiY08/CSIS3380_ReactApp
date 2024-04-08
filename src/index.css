@@ -1,0 +1,26 @@
+@import url("https://fonts.googleapis.com/css2?family=Forum&display=swap");
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  font-family: "Forum", serif;
+}
+
+:root {
+  --color-white: #fff;
+  --color-black: #000000;
+  --color-gray: #4b4b4b;
+  --color-blue: #7394e9;
+  --color-red: #db6060;
+  --color-yellow: rgb(207, 196, 41);
+  --baby-blue: #d3e3f3;
+  --baby-gray: #e9e9e9;
+  --baby-red: #fde4e4;
+
+  --shadow-container: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+
+  --gradient-blue: linear-gradient(90deg, #49c6be 0%, #7394e9 100%);
+  --gradient-violet: linear-gradient(90deg, #d9a7e1 0%, #a080e4 100%);
+}

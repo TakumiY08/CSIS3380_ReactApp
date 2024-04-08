@@ -1,0 +1,75 @@
+.userProfileSection {
+  margin: 0rem 2rem;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.additionalInfoContainer {
+  display: flex;
+  flex-direction: column;
+  row-gap: 2rem;
+
+  padding: 2rem;
+  background: var(--gradient-violet);
+  border-radius: 5px;
+}
+
+.additionalInfo {
+  font-size: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  row-gap: 2rem;
+  color: var(--color-white);
+}
+
+.heading {
+  font-size: 2.2rem;
+  text-transform: uppercase;
+  letter-spacing: 1rem;
+  color: var(--color-gray);
+  text-align: center;
+}
+
+.subHeading {
+  font-size: 1.7rem;
+  text-transform: uppercase;
+  letter-spacing: 1rem;
+  color: var(--color-white);
+  text-align: center;
+}
+
+.button {
+  padding: 1.5rem 2rem;
+  font-size: 1.5rem;
+  border: none;
+  background: var(--color-white);
+  color: var(--color-gray);
+  cursor: pointer;
+  text-transform: uppercase;
+  font-weight: 600;
+  transition: all 0.1s ease;
+  text-decoration: none;
+  align-self: center;
+  border-radius: 5px;
+}
+
+.button:hover {
+  background: var(--color-gray);
+  color: var(--color-white);
+}
+
+.button:active {
+  background: var(--color-black);
+  color: var(--color-white);
+}
+
+.label {
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.5rem;
+}
+
+.heading {
+  padding: 2rem;
+}

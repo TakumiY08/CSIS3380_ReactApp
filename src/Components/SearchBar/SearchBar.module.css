@@ -1,0 +1,38 @@
+.input {
+  font-size: 1.5rem;
+  padding: 1rem;
+  padding-left: 4rem;
+  outline: none;
+  border: none;
+  border-radius: 5px;
+  filter: var(--shadow-container);
+
+  transition: all 0.3s ease;
+  width: 25rem;
+}
+
+.input:focus {
+  transform: translateY(-5px);
+}
+
+.input:focus ~ .icon {
+  transform: translateY(calc(-50% - 5px));
+}
+
+.searchBar {
+  position: relative;
+}
+
+.icon {
+  position: absolute;
+
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+
+  font-size: 2rem;
+  color: var(--color-gray);
+
+  z-index: 10000;
+  transition: all 0.3s ease;
+}

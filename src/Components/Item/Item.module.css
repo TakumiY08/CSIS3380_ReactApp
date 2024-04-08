@@ -1,0 +1,146 @@
+.container {
+  width: min-content;
+  padding: 1rem;
+  background: var(--gradient-violet);
+  color: var(--color-white);
+  position: relative;
+}
+
+.tea > .container {
+  width: min-content;
+  padding: 1rem;
+  background: var(--gradient-violet);
+  color: var(--color-white);
+}
+
+.link {
+  color: var(--color-white);
+}
+
+.item {
+  box-shadow: var(--shadow-container);
+}
+
+.tea {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-white);
+  position: relative;
+}
+
+.tea .title {
+  color: var(--color-gray);
+  margin-bottom: 1rem;
+}
+
+.title {
+  font-size: 1.5rem;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.information {
+  display: flex;
+}
+
+.content {
+  display: none;
+}
+
+.tea > .container {
+  background: var(--color-white);
+}
+
+.container:hover > .content {
+  display: flex;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.74);
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+}
+
+.tea .container:hover > .content {
+  display: flex;
+  position: absolute;
+  left: 0;
+  font-size: 0.8rem;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.74);
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+}
+.description {
+  width: 50%;
+}
+
+.image {
+  height: 15rem;
+}
+
+.inputQuantity {
+  width: 2rem;
+  font-size: 1.2rem;
+  padding: 0.2rem;
+  border: none;
+  border-radius: 5px;
+  box-shadow: rgba(0, 0, 0, 0.041) 0px 10px 15px -3px inset,
+    rgba(37, 37, 37, 0.1) 0px 4px 6px -4px;
+}
+
+.controlsPrice {
+  display: flex;
+  column-gap: 1rem;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.controls {
+  display: flex;
+  row-gap: 0.5rem;
+  column-gap: 1rem;
+  justify-content: space-between;
+  padding: 1rem;
+  background-color: var(--color-white);
+}
+
+.price {
+  font-size: 1.5rem;
+  color: var(--color-gray);
+}
+
+.button {
+  font-family: inherit;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  padding: 1rem;
+  width: max-content;
+  cursor: pointer;
+  border: none;
+  font-weight: 600;
+  background-color: var(--color-white);
+  color: var(--color-gray);
+  border: 2px solid var(--color-gray);
+  position: relative;
+}
+
+.button:hover {
+  background-color: var(--color-gray);
+  border: 2px solid var(--color-gray);
+  color: var(--color-white);
+}
+
+.button:active {
+  background-color: var(--color-black);
+  border: 2px solid var(--color-black);
+  color: var(--color-white);
+}

@@ -1,0 +1,16 @@
+.sectionLogin {
+  padding: 5rem;
+  display: flex;
+  justify-content: center;
+}
+
+.sectionSignup {
+  padding: 5rem;
+  display: flex;
+  justify-content: center;
+}
+
+.page {
+  background-color: var(--baby-blue);
+  height: 100vh;
+}

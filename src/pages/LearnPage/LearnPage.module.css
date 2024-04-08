@@ -1,0 +1,59 @@
+.container {
+  background-color: var(--color-white);
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  max-width: 800px;
+  margin: auto;
+  padding: 1rem;
+  justify-content: flex-start;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  position: relative; /* Add position relative */
+}
+
+/* New styles for the back button */
+.backButton {
+  position: absolute;
+  top: 1rem; /* Adjust top position */
+  left: 1rem; /* Adjust left position */
+  text-transform: uppercase;
+  font-size: 1.2rem;
+  color: var(--color-white);
+  padding: 0.5rem 1rem;
+  background-color: transparent;
+  border: 2px solid var(--color-white);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.backButton:hover {
+  background-color: var(--color-white);
+  color: var(--gradient-blue);
+}
+
+.reviewsSection {
+  padding: 2rem;
+  display: flex;
+  column-gap: 2rem;
+  justify-content: center;
+}
+
+.page {
+  background: var(--baby-blue);
+}
+
+.heading {
+  text-transform: uppercase;
+  font-size: 2rem;
+  letter-spacing: 1rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.list {
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
+}

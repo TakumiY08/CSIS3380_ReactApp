@@ -1,0 +1,53 @@
+.container {
+  background-color: var(--color-white);
+  display: flex;
+  flex-direction: column;
+  width: 15rem;
+  padding: 1rem;
+  height: 20rem;
+  justify-content: flex-start;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  text-decoration: none;
+  color: inherit;
+}
+
+.container:hover {
+  transform: translateY(-5px);
+  background-color: #d3e3f3;
+}
+
+.container:active {
+  transform: translateY(2px);
+}
+
+.gradient {
+  background: var(--gradient-blue) !important;
+  color: var(--color-white) !important;
+}
+
+.name {
+  text-transform: uppercase;
+}
+
+.information {
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.5rem;
+  height: 100%;
+}
+
+.block {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  column-gap: 1rem;
+}
+
+.price {
+  font-size: 2rem;
+}
+
+.image {
+  height: 25rem;
+}
