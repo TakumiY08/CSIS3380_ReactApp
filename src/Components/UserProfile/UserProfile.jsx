@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import styles from "./UserProfile.module.css";
 import AdditionalInfoForm from "../AdditionalInfoForm/AdditionalInfoForm";
 import { useNavigate, useLocation } from "react-router-dom";
+import { setSession, getSession } from "../../utilities/session";
 
 const UserProfile = (props) => {
   const [isUpdating, setIsUpdating] = useState(false);
@@ -12,22 +13,21 @@ const UserProfile = (props) => {
   const [dateOfBirth, setDateOfBirth] = useState(null);
 
   useEffect(() => {
-    if(!props.user) {
-      navigate('/account/login');
+    if (!props.user) {
+      navigate("/account/login");
     }
   }, [props.user, navigate]);
-  
+
   const user = props.user;
   let isFullName = user.fullName !== null ? true : false;
 
   useEffect(() => {
-    if(props.user){
-      setFullName(user.fullName || '');
-      setAddress(user.address || '');
-      setDateOfBirth(user.dateOfBirth || '');
+    if (props.user) {
+      setFullName(user.fullName || "");
+      setAddress(user.address || "");
+      setDateOfBirth(user.dateOfBirth || "");
     }
-      setIsUpdating(false);
-      
+    setIsUpdating(false);
   }, [props.user]);
 
   const handleUpdateInfo = (updatedUser) => {
@@ -36,14 +36,21 @@ const UserProfile = (props) => {
     setDateOfBirth(updatedUser.dateOfBirth);
     setIsUpdating(false);
 
-    if(props.onUpdateUser) {
+    if (props.onUpdateUser) {
       props.onUpdateUser({
         ...props.user,
         fullName: updatedUser.fullName,
         address: updatedUser.address,
-        dateOfBirth: updatedUser.dateOfBirth
+        dateOfBirth: updatedUser.dateOfBirth,
       });
     }
+  };
+
+  const logoutUser = async(event) => {
+    event.preventDefault();
+
+    setSession(null);
+    navigate('/account');
   }
 
   return (
@@ -81,14 +88,18 @@ const UserProfile = (props) => {
             >
               Update Information
             </button>
+
+            <button
+              className={styles.button}
+              onClick={logoutUser}
+            >
+              Log Out
+            </button>
           </div>
         )}
 
         {isUpdating && (
-          <AdditionalInfoForm
-            user={user}
-            submitUser={handleUpdateInfo}
-          />
+          <AdditionalInfoForm user={user} submitUser={handleUpdateInfo} />
         )}
       </div>
     </section>

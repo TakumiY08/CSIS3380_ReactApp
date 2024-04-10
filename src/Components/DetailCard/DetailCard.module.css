@@ -3,7 +3,7 @@
   flex-direction: row;
   width: 100%;
   height: 70%;
-  justify-content: space-around;
+  justify-content: flex-start;
   align-items: center;
 }
 
@@ -28,11 +28,6 @@
   flex: none;
 }
 
-.imageContainer {
-  flex: 2;
-  height: 70%;
-}
-
 .name {
   font-size: 2.5rem;
   text-transform: uppercase;
@@ -42,12 +37,13 @@
 .detailsContainer {
   flex: 1;
   padding: 0 20px;
-  transform: translate(-22rem, 0);
+
   font-size: 1.2rem;
 }
 
 .image {
-  width: 100%;
+  width: auto;
+  height: 70vh;
 }
 
 .button {

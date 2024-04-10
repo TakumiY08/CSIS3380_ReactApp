@@ -1,11 +1,13 @@
 import { NavLink } from "react-router-dom";
 import styles from "./CoffeeCard.module.css";
+import React from "react";
 
 const CoffeeCard = ({ item, isGradient }) => {
+  const itemPath = String(item.id).startsWith('t') ? `/tea/${item.id}` : `/coffee/${item.id}` 
   return (
     <NavLink
       className={`${styles.container} ${isGradient ? styles.gradient : ""}`}
-      to={`coffee/${item.id}`}
+      to={itemPath}
     >
       <img src={item.image_url} alt={item.name} className={styles.image} />
 

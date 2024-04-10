@@ -50,7 +50,7 @@ export async function getEmails() {
         const data = await response.json();
         return data;
     } catch(error) {
-        console.error("Error fetching coffee data:", error);
+        console.error("Error fetching emails:", error);
         return [];
     }
 }
