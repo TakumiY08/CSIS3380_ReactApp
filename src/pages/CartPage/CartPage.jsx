@@ -8,17 +8,19 @@ import { getSession } from "../../utilities/session.js";
 const CartPage = () => {
   const [cartItems, setCartItems] = useState([]);
   const [userId, setUserId] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+  const [error, setError] = useState(null);
+  const [userAddress, setUserAddress] = useState("");
   const navigate = useNavigate();
   const CART_ITEMS = "cartItems";
 
   useEffect(() => {
     const storedCartItems = JSON.parse(localStorage.getItem(CART_ITEMS)) || [];
     const getUser = async () => {
-      if (await getSession() !== null) {
-        const data = await getSession();
-        if (data) {
-          setUserId(data.user._id);
-        }
+      const sessionData = await getSession();
+      if (sessionData) {
+        setUserId(sessionData.user._id);
+        setUserAddress(sessionData.user.address || "");
       }
     };
     getUser();
@@ -32,17 +34,12 @@ const CartPage = () => {
   };
 
   const removeOneQuantity = (itemId) => {
-    const updatedCartItems = cartItems
-      .map((item) => {
-        if (item.id === itemId) {
-          if (item.quantity === 1) {
-            return null;
-          }
-          return { ...item, quantity: Math.max(0, item.quantity - 1) };
-        }
-        return item;
-      })
-      .filter(Boolean);
+    const updatedCartItems = cartItems.map((item) => {
+      if (item.id === itemId) {
+        return { ...item, quantity: Math.max(1, item.quantity - 1) };
+      }
+      return item;
+    });
     setCartItems(updatedCartItems);
     localStorage.setItem(CART_ITEMS, JSON.stringify(updatedCartItems));
   };
@@ -73,26 +70,23 @@ const CartPage = () => {
       alert("Please login if you want to checkout items");
       navigate("/account/login");
     } else {
-      await transactionProcess();
-      alert("Your order is successfully completed");
+      if (cartItems.length > 0) {
+        setShowModal(true);
+      } else {
+        setError("Your cart is currently empty");
+      }
     }
   };
 
   const transactionProcess = async () => {
-    let cartContents = [];
-    let transactionInfo = [];
-    cartItems.map((item) => {
-      let productId = item.id;
-      let quantity = item.quantity;
-      let cartItem = {
-        product_id: productId,
-        quantity: quantity,
+    const cartContents = cartItems.map((item) => {
+      return {
+        product_id: item.id,
+        quantity: item.quantity,
       };
-
-      cartContents.push(cartItem);
     });
 
-    transactionInfo = {
+    const transactionInfo = {
       userId: userId,
       contents: cartContents,
       grandTotal: grandTotal,
@@ -100,10 +94,11 @@ const CartPage = () => {
     };
 
     try {
-      const result = addTransaction(transactionInfo);
-
+      const result = await addTransaction(transactionInfo);
       if (result) {
         localStorage.removeItem(CART_ITEMS);
+        const sessionData = await getSession();
+        alert(`Order has been placed. Thank you!`);
         navigate("/");
       }
     } catch (error) {
@@ -111,58 +106,90 @@ const CartPage = () => {
     }
   };
 
-  function formatDate(timestamp) {
-    const date = new Date(timestamp);
-    const month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
-    const day = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
-    const year = date.getFullYear();
-    const hours = date.getHours() % 12 || 12;
-    const minutes = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
-    const amOrPm = date.getHours() < 12 ? "AM" : "PM";
-
-    return `${month}/${day}/${year} ${hours}:${minutes} ${amOrPm}`;
-  }
+  const formatDate = (timestamp) => {
+    const currentDate = new Date(timestamp);
+    const estimatedDeliveryDate = new Date(timestamp);
+    estimatedDeliveryDate.setDate(currentDate.getDate() + 10); //add 10 days for estimated time
+    const formattedCurrentDate = `${currentDate.getMonth() + 1}/${currentDate.getDate()}/${currentDate.getFullYear()}`;
+    const formattedEstimatedDate = `${estimatedDeliveryDate.getMonth() + 1}/${estimatedDeliveryDate.getDate()}/${estimatedDeliveryDate.getFullYear()}`;
+    return { currentDate: formattedCurrentDate, estimatedDate: formattedEstimatedDate };
+  };
 
   return (
     <div>
       <NavBar />
       <div className={styles.cartSection}>
         <h2>Your Cart</h2>
-        <ul className={styles.list}>
-          {cartItems.map((item) => (
-            <li key={item.id} className={styles.cartItem}>
-              <NavLink to={String(item.id).startsWith('t') ? `/tea/${item.id}` : `/coffee/${item.id}`} className={styles.link}>
-                <img src={item.image_url} alt={item.name} className={styles.image} />
-              </NavLink>
+        {error && <p className={styles.error}>{error}</p>}
+        {cartItems.length > 0 ? (
+          <>
+            <ul className={styles.list}>
+              {cartItems.map((item) => (
+                <li key={item.id} className={styles.cartItem}>
+                  <NavLink
+                    to={String(item.id).startsWith("t") ? `/tea/${item.id}` : `/coffee/${item.id}`}
+                    className={styles.link}
+                  >
+                    <img src={item.image_url} alt={item.name} className={styles.image} />
+                  </NavLink>
 
-              <div className={styles.information}>
-                <div className={styles.block}>
-                  <h4 className={styles.name}>{item.name}</h4>
-                  <p className={styles.price}>${item.price}</p>
-                  <p className={styles.quantity}>Quantity: {item.quantity}</p>
-                </div>
-                <p className={styles.description}>{item.description}</p>
-              </div>
+                  <div className={styles.information}>
+                    <div className={styles.block}>
+                      <h4 className={styles.name}>{item.name}</h4>
+                      <p className={styles.price}>${item.price}</p>
+                      <p className={styles.quantity}>Quantity: {item.quantity}</p>
+                    </div>
+                    <p className={styles.description}>{item.description}</p>
+                  </div>
 
-              <div className={styles.cartItemButtonGroup}>
-                <button className={styles.button} onClick={() => addOneQuantity(item.id)}>
-                  Add One
-                </button>
-                <button className={styles.button} onClick={() => removeOneQuantity(item.id)}>
-                  Remove One
-                </button>
-                <button className={styles.button} onClick={() => removeFromCart(item.id)}>
-                  Remove All
-                </button>
-              </div>
-            </li>
-          ))}
-        </ul>
-        <h3 className={styles.total}>Grand Total: ${grandTotal.toFixed(2)}</h3>
-        <button className={styles.button} onClick={handleTransaction}>
-          Checkout
-        </button>
+                  <div className={styles.cartItemButtonGroup}>
+                    <button className={styles.button} onClick={() => addOneQuantity(item.id)}>
+                      Add One
+                    </button>
+                    <button className={styles.button} onClick={() => removeOneQuantity(item.id)}>
+                      Remove One
+                    </button>
+                    <button className={styles.button} onClick={() => removeFromCart(item.id)}>
+                      Remove All
+                    </button>
+                  </div>
+                </li>
+              ))}
+            </ul>
+            <h3 className={styles.total}>Grand Total: ${grandTotal.toFixed(2)}</h3>
+            <button className={styles.button} onClick={handleTransaction}>
+              Checkout
+            </button>
+          </>
+        ) : (
+          <p>Your cart is currently empty</p>
+        )}
       </div>
+      {showModal && (
+        <div className={styles.modal}>
+          <div className={styles.modalContent}>
+            <span className={styles.closeButton} onClick={() => setShowModal(false)}>
+              &times;
+            </span>
+            <h2>Order Summary</h2>
+            <p>Address: {userAddress}</p>
+            <p>Current Date: {formatDate(Date.now()).currentDate}</p>
+            <p>Estimated Delivery Date: {formatDate(Date.now()).estimatedDate}</p>
+            <p>Grand Total: ${grandTotal.toFixed(2)}</p>
+            <br></br>
+            <ul>
+              {cartItems.map((item) => (
+                <li key={item.id}>
+                  {item.name} - Quantity: {item.quantity}
+                </li>
+              ))}
+            </ul>
+            <button className={styles.orderButton} onClick={transactionProcess}>
+              Place Order
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

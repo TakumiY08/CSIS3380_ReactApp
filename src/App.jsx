@@ -5,7 +5,7 @@ import LearnMorePage from "./pages/LearnPage/LearnPage";
 import CartPage from "./pages/CartPage/CartPage";
 import UserAccountPage from "./pages/UserAccountPage/UserAccountPage";
 import ProductPage from "./pages/ProductPage/ProductPage";
-import CheckoutPage from "./pages/CheckoutPage/CheckoutPage";
+
 
 function App() {
   return (
@@ -17,7 +17,6 @@ function App() {
         <Route path="/coffee/:id" element={<LearnMorePage />} />
         <Route path="/tea/:id" element={<LearnMorePage />} />
         <Route path="/cart" element={<CartPage />} />
-        <Route path="/checkout" element={<CheckoutPage />} />
         <Route path="/account" element={<Navigate to={"/account/login"} />} />
         <Route
           path="/account/login"
